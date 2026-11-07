@@ -16,9 +16,7 @@
   --gold:#c2913a; --accent-action:#b8873a; --accent-data:#8a6522;
   --success:#2f6b4f; --danger:#a3402f;
   --line:rgba(16,29,49,.10); --radius:22px; --radius-sm:12px;
-  --font-display:'Unbounded',sans-serif;
-  --font-body:'Inter Tight',sans-serif;
-  --font-mono:'IBM Plex Mono',monospace;
+  --font-display:'Unbounded',sans-serif; --font-body:'Inter Tight',sans-serif; --font-mono:'IBM Plex Mono',monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -26,12 +24,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-wei
 ::selection{background:var(--gold);color:#fff}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
-.top{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px clamp(20px,4vw,48px);
-  background:rgba(250,246,239,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  box-shadow:0 1px 0 var(--line);position:sticky;top:0;z-index:10;
-}
+.top{display:flex;align-items:center;justify-content:space-between;padding:16px clamp(20px,4vw,48px);background:rgba(250,246,239,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line);position:sticky;top:0;z-index:10}
 .top .logo-mark{width:46px;height:46px}
 .top a{color:var(--ink-soft);font-size:14px;text-decoration:none;transition:color .3s}
 .top a:hover{color:var(--ink)}
@@ -42,62 +35,51 @@ body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-wei
 h1{font-family:var(--font-display);font-weight:600;font-size:clamp(28px,5vw,46px);line-height:1.12;margin-bottom:16px}
 .lead{color:var(--ink-soft);font-size:16px;max-width:60ch;margin-bottom:10px}
 .lead b{color:var(--ink);font-weight:500}
-.note-top{
-  font-size:14.5px;color:var(--ink-soft);
-  background:var(--bg-2);border-radius:var(--radius-sm);
-  padding:14px 18px;margin:22px 0 34px;border-left:3px solid var(--gold);
-}
+.note-top{font-size:14.5px;color:var(--ink-soft);background:var(--bg-2);border-radius:var(--radius-sm);padding:14px 18px;margin:22px 0 34px;border-left:3px solid var(--gold)}
 
 .field{margin-bottom:22px}
-.field label{
-  display:block;margin-bottom:9px;font-size:15.5px;line-height:1.45;color:var(--ink);
-  font-weight:500;
-}
-.qnum{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:24px;height:24px;border-radius:50%;flex:none;margin-right:10px;
-  background:var(--ink);color:#fff;font-family:var(--font-mono);font-size:12px;font-weight:500;
-  vertical-align:middle;
-}
+.qlabel{display:flex;gap:10px;margin-bottom:9px;font-size:15.5px;line-height:1.45;color:var(--ink);font-weight:500}
+.qnum{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;flex:none;background:var(--ink);color:#fff;font-family:var(--font-mono);font-size:12px;font-weight:500;margin-top:1px}
 .req{color:var(--danger);margin-left:3px}
-.field input,.field textarea{
-  width:100%;padding:13px 15px;border-radius:var(--radius-sm);
-  border:1px solid var(--line);background:var(--card);
-  font-family:var(--font-body);font-size:15.5px;color:var(--ink);
-  transition:border-color .3s;resize:vertical;
+.inp{width:100%;padding:13px 15px;border-radius:var(--radius-sm);border:1px solid var(--line);background:var(--card);font-family:var(--font-body);font-size:15.5px;color:var(--ink);transition:border-color .3s;resize:vertical}
+.inp:focus{outline:none;border-color:var(--accent-action)}
+input[type=date].inp{min-height:48px}
+
+/* Так/Ні */
+.yn{display:flex;gap:10px}
+.yn-btn{
+  flex:1;padding:12px 18px;border-radius:var(--radius-sm);cursor:pointer;
+  border:1px solid var(--line);background:var(--card);color:var(--ink-soft);
+  font-family:var(--font-body);font-size:15.5px;font-weight:500;transition:all .25s;
 }
-.field input:focus,.field textarea:focus{outline:none;border-color:var(--accent-action)}
+.yn-btn:hover{border-color:var(--accent-action)}
+.yn-btn.on[data-val="Так"]{background:var(--success);border-color:var(--success);color:#fff}
+.yn-btn.on[data-val="Ні"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.yn-extra{margin-top:10px;animation:slide .3s ease}
+.yn-extra textarea{width:100%;padding:13px 15px;border-radius:var(--radius-sm);border:1px solid var(--accent-action);background:var(--card);font-family:var(--font-body);font-size:15.5px;color:var(--ink);resize:vertical}
+.yn-extra textarea:focus{outline:none;border-color:var(--gold)}
+@keyframes slide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* дві дати */
+.two-dates{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.two-dates{grid-template-columns:1fr}}
+.subdate{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--ink-soft)}
 
 .consent{display:flex;align-items:flex-start;gap:11px;margin:10px 0 24px;cursor:pointer}
 .consent input{margin-top:3px;accent-color:var(--accent-action);width:17px;height:17px;flex:none}
 .consent span{font-size:14px;color:var(--ink-soft)}
 .err{padding:12px 16px;border-radius:var(--radius-sm);margin-bottom:16px;background:rgba(163,64,47,.09);color:var(--danger);font-size:14px}
-
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;
-  padding:16px 28px;border:none;border-radius:999px;cursor:pointer;
-  background:var(--accent-action);color:#fff;
-  font-family:var(--font-body);font-size:16px;font-weight:500;
-  transition:transform .3s cubic-bezier(.65,0,.35,1), box-shadow .3s;
-}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px 28px;border:none;border-radius:999px;cursor:pointer;background:var(--accent-action);color:#fff;font-family:var(--font-body);font-size:16px;font-weight:500;transition:transform .3s cubic-bezier(.65,0,.35,1),box-shadow .3s}
 .btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(184,135,58,.6)}
 .btn:disabled{opacity:.6;cursor:wait;transform:none}
 
 .done{text-align:center;padding:40px 20px}
-.done-mark{
-  width:72px;height:72px;margin:0 auto 22px;border-radius:50%;
-  border:2px solid var(--success);color:var(--success);
-  display:flex;align-items:center;justify-content:center;font-size:32px;
-  animation:pop .5s cubic-bezier(.3,1.6,.4,1);
-}
+.done-mark{width:72px;height:72px;margin:0 auto 22px;border-radius:50%;border:2px solid var(--success);color:var(--success);display:flex;align-items:center;justify-content:center;font-size:32px;animation:pop .5s cubic-bezier(.3,1.6,.4,1)}
 @keyframes pop{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
 .done h2{font-family:var(--font-display);font-weight:600;font-size:26px;margin-bottom:12px}
 .done p{color:var(--ink-soft);font-size:16px;max-width:46ch;margin:0 auto}
 
-@media(max-width:620px){
-  .wrap{padding:26px 16px 60px}
-  .qnum{width:21px;height:21px;font-size:11px;margin-right:8px}
-}
+@media(max-width:620px){.wrap{padding:26px 16px 60px}.qnum{width:21px;height:21px;font-size:11px}}
 </style>
 </head>
 <body>
@@ -154,111 +136,129 @@ h1{font-family:var(--font-display);font-weight:600;font-size:clamp(28px,5vw,46px
     <div class="eyebrow">Опитувальна анкета</div>
     <h1>Віза в Китай</h1>
     <p class="lead">Заповніть анкету якомога детальніше — це основа для підготовки вашої візи. <b>Перше поле заповнюється англійською, як у паспорті</b>, решту можна українською.</p>
-    <div class="note-top">Поля із зірочкою (<span class="req">*</span>) обовʼязкові. Якщо якийсь пункт до вас не стосується — напишіть «—» або «немає».</div>
+    <div class="note-top">Поля із зірочкою (<span class="req">*</span>) обовʼязкові. У питаннях «Так / Ні» оберіть відповідь — якщо «Так», зʼявиться поле для деталей. Якщо пункт вас не стосується — оберіть «Ні» або напишіть «—».</div>
 
       <div class="field">
-        <label for="q0"><span class="qnum">1</span>П. І. П. як в закордонному паспорті. Зміни прізвищ, дати змін, причини <span class="req">*</span></label>
-        <input type="text" id="q0" name="q0" placeholder="Ваша відповідь" required>
+        <label class="qlabel"><span class="qnum">1</span><span>П. І. П. як в закордонному паспорті. Зміни прізвищ, дати змін, причини <span class="req">*</span></span></label>
+        <input type="text" id="q0" name="q0" class="inp" placeholder="Ваша відповідь" required>
       </div>
       <div class="field">
-        <label for="q1"><span class="qnum">2</span>Країна в якій Ви зараз знаходитесь і в якій будете подавати на візу</label>
-        <input type="text" id="q1" name="q1" placeholder="Ваша відповідь">
+        <label class="qlabel"><span class="qnum">2</span><span>Країна в якій Ви зараз знаходитесь і в якій будете подавати на візу</span></label>
+        <input type="text" id="q1" name="q1" class="inp" placeholder="Ваша відповідь">
       </div>
       <div class="field">
-        <label for="q2"><span class="qnum">3</span>Стать, національність, наявність громадянства інших країн в теперішньому та минулому (дати)</label>
-        <textarea id="q2" name="q2" rows="2" placeholder="Ваша відповідь"></textarea>
+        <label class="qlabel"><span class="qnum">3</span><span>Стать, національність, наявність громадянства інших країн в теперішньому та минулому (дати)</span></label>
+        <textarea id="q2" name="q2" rows="2" class="inp" placeholder="Ваша відповідь"></textarea>
       </div>
       <div class="field">
-        <label for="q3"><span class="qnum">4</span>Дата народження</label>
-        <input type="text" id="q3" name="q3" placeholder="Ваша відповідь">
+        <label class="qlabel"><span class="qnum">4</span><span>Дата народження</span></label>
+        <input type="date" id="q3" name="q3" class="inp">
       </div>
       <div class="field">
-        <label for="q4"><span class="qnum">5</span>Ідентифікаційний код</label>
-        <input type="text" id="q4" name="q4" placeholder="Ваша відповідь">
+        <label class="qlabel"><span class="qnum">5</span><span>Ідентифікаційний код</span></label>
+        <input type="text" id="q4" name="q4" class="inp" placeholder="Ваша відповідь">
       </div>
       <div class="field">
-        <label for="q5"><span class="qnum">6</span>Яка запланована дата в’їзду та тривалість Вашого перебування у Китай ?</label>
-        <input type="text" id="q5" name="q5" placeholder="Ваша відповідь">
+        <label class="qlabel"><span class="qnum">6</span><span>Яка запланована дата в’їзду та тривалість Вашого перебування у Китай ?</span></label>
+        <input type="text" id="q5" name="q5" class="inp" placeholder="Ваша відповідь">
       </div>
       <div class="field">
-        <label for="q6"><span class="qnum">7</span>НА ЯКУ ВІЗУ ПОДАЄТЕ / (одноразова, дворазова, мульті)</label>
-        <textarea id="q6" name="q6" rows="2" placeholder="Ваша відповідь"></textarea>
+        <label class="qlabel"><span class="qnum">7</span><span>НА ЯКУ ВІЗУ ПОДАЄТЕ / (одноразова, дворазова, мульті)</span></label>
+        <textarea id="q6" name="q6" rows="2" class="inp" placeholder="Ваша відповідь"></textarea>
       </div>
       <div class="field">
-        <label for="q7"><span class="qnum">8</span>Що Ви будет робити у Китаї?Ціль візиту?</label>
-        <input type="text" id="q7" name="q7" placeholder="Ваша відповідь">
+        <label class="qlabel"><span class="qnum">8</span><span>Що Ви будет робити у Китаї?Ціль візиту?</span></label>
+        <input type="text" id="q7" name="q7" class="inp" placeholder="Ваша відповідь">
       </div>
       <div class="field">
-        <label for="q8"><span class="qnum">9</span>Номер, серія паспорту, дата видачі, орган що видав, місце, країна видачі. / Увага! Вказати дані паспорта, у який плануєте отримати візу та надіслати відскановану 1 сторінку у хорошій якості</label>
-        <textarea id="q8" name="q8" rows="2" placeholder="Ваша відповідь"></textarea>
+        <label class="qlabel"><span class="qnum">9</span><span>Номер, серія паспорту, дата видачі, орган що видав, місце, країна видачі. / Увага! Вказати дані паспорта, у який плануєте отримати візу та надіслати відскановану 1 сторінку у хорошій якості</span></label>
+        <textarea id="q8" name="q8" rows="2" class="inp" placeholder="Ваша відповідь"></textarea>
       </div>
       <div class="field">
-        <label for="q9"><span class="qnum">10</span>Як ви будете фінансувати своє перебування в Китаї? (Спонсор,сімя,власні кошти,заробітна плата?</label>
-        <textarea id="q9" name="q9" rows="2" placeholder="Ваша відповідь"></textarea>
+        <label class="qlabel"><span class="qnum">10</span><span>Як ви будете фінансувати своє перебування в Китаї? (Спонсор,сімя,власні кошти,заробітна плата?</span></label>
+        <textarea id="q9" name="q9" rows="2" class="inp" placeholder="Ваша відповідь"></textarea>
       </div>
       <div class="field">
-        <label for="q10"><span class="qnum">11</span>Адреса проживання в Україні, або країні теперішнього перебування.</label>
-        <input type="text" id="q10" name="q10" placeholder="Ваша відповідь">
+        <label class="qlabel"><span class="qnum">11</span><span>Адреса проживання в Україні, або країні теперішнього перебування.</span></label>
+        <input type="text" id="q10" name="q10" class="inp" placeholder="Ваша відповідь">
       </div>
       <div class="field">
-        <label for="q11"><span class="qnum">12</span>Місце народження: населений пункт, країна</label>
-        <input type="text" id="q11" name="q11" placeholder="Ваша відповідь">
+        <label class="qlabel"><span class="qnum">12</span><span>Місце народження: населений пункт, країна</span></label>
+        <input type="text" id="q11" name="q11" class="inp" placeholder="Ваша відповідь">
       </div>
       <div class="field">
-        <label for="q12"><span class="qnum">13</span>Мобільний телефон</label>
-        <input type="text" id="q12" name="q12" placeholder="Ваша відповідь">
+        <label class="qlabel"><span class="qnum">13</span><span>Мобільний телефон</span></label>
+        <input type="text" id="q12" name="q12" class="inp" placeholder="Ваша відповідь">
       </div>
       <div class="field">
-        <label for="q13"><span class="qnum">14</span>email</label>
-        <input type="text" id="q13" name="q13" placeholder="Ваша відповідь">
+        <label class="qlabel"><span class="qnum">14</span><span>email</span></label>
+        <input type="text" id="q13" name="q13" class="inp" placeholder="Ваша відповідь">
       </div>
       <div class="field">
-        <label for="q14"><span class="qnum">15</span>МІСЦЕ РОБОТИ (вказати за останні 5 років інформацію) / 1.Коли почали працювати (вказати дату). / 2.Назва підприємства. / 3.Посада та обов’язки. / 4.Адреса. / 5.Телефон компанії. / 6.Прізвище та ім’я керівника.</label>
-        <textarea id="q14" name="q14" rows="2" placeholder="Ваша відповідь"></textarea>
+        <label class="qlabel"><span class="qnum">15</span><span>МІСЦЕ РОБОТИ (вказати за останні 5 років інформацію) / 1.Коли почали працювати (вказати дату). / 2.Назва підприємства. / 3.Посада та обов’язки. / 4.Адреса. / 5.Телефон компанії. / 6.Прізвище та ім’я керівника.</span></label>
+        <textarea id="q14" name="q14" rows="2" class="inp" placeholder="Ваша відповідь"></textarea>
       </div>
       <div class="field">
-        <label for="q15"><span class="qnum">16</span>ОСВІТА, ДИПЛОМ / (останній заклад, що закінчили – повна його назва)</label>
-        <textarea id="q15" name="q15" rows="2" placeholder="Ваша відповідь"></textarea>
+        <label class="qlabel"><span class="qnum">16</span><span>ОСВІТА, ДИПЛОМ / (останній заклад, що закінчили – повна його назва)</span></label>
+        <textarea id="q15" name="q15" rows="2" class="inp" placeholder="Ваша відповідь"></textarea>
       </div>
       <div class="field">
-        <label for="q16"><span class="qnum">17</span>Вказати країни, які відвідувадли за останні 12 місяців</label>
-        <input type="text" id="q16" name="q16" placeholder="Ваша відповідь">
+        <label class="qlabel"><span class="qnum">17</span><span>Вказати країни, які відвідувадли за останні 12 місяців</span></label>
+        <input type="text" id="q16" name="q16" class="inp" placeholder="Ваша відповідь">
       </div>
       <div class="field">
-        <label for="q17"><span class="qnum">18</span>Попередні поїздки до Китай типи віз, дати, тривалість та мета перебування. Який аеропорт/пункт перетину кордону? Наземний, авіатранспорт?</label>
-        <textarea id="q17" name="q17" rows="2" placeholder="Ваша відповідь"></textarea>
+        <label class="qlabel"><span class="qnum">18</span><span>Попередні поїздки до Китай типи віз, дати, тривалість та мета перебування. Який аеропорт/пункт перетину кордону? Наземний, авіатранспорт?</span></label>
+        <textarea id="q17" name="q17" rows="2" class="inp" placeholder="Ваша відповідь"></textarea>
       </div>
       <div class="field">
-        <label for="q18"><span class="qnum">19</span>Нелегальні перебування та робота у Китаї Депортації, порушення імміграційного законодавства в будь-якій країні</label>
-        <textarea id="q18" name="q18" rows="2" placeholder="Ваша відповідь"></textarea>
+        <label class="qlabel"><span class="qnum">19</span><span>Нелегальні перебування та робота у Китаї Депортації, порушення імміграційного законодавства в будь-якій країні</span></label>
+        <div class="yn" data-q="18">
+          <button type="button" class="yn-btn" data-val="Так">Так</button>
+          <button type="button" class="yn-btn" data-val="Ні">Ні</button>
+        </div>
+        <div class="yn-extra" id="extra18" hidden>
+          <textarea id="q18_d" rows="2" placeholder="Якщо так — опишіть детальніше"></textarea>
+        </div>
       </div>
       <div class="field">
-        <label for="q19"><span class="qnum">20</span>ІНФОРМАЦІЯ ПРО СІМ'Ю / (батьки, сімейний стан, діти) / Чоловік \ Дружина: / ПРІЗВИЩЕ ІМЯ / НАЦІОНАЛЬНІСТЬ / ДАТА НАРОДЖЕННЯ (рррр.мм.дд.) / Професія:</label>
-        <textarea id="q19" name="q19" rows="2" placeholder="Ваша відповідь"></textarea>
+        <label class="qlabel"><span class="qnum">20</span><span>ІНФОРМАЦІЯ ПРО СІМ'Ю / (батьки, сімейний стан, діти) / Чоловік \ Дружина: / ПРІЗВИЩЕ ІМЯ / НАЦІОНАЛЬНІСТЬ / ДАТА НАРОДЖЕННЯ (рррр.мм.дд.) / Професія:</span></label>
+        <textarea id="q19" name="q19" rows="2" class="inp" placeholder="Ваша відповідь"></textarea>
       </div>
       <div class="field">
-        <label for="q20"><span class="qnum">21</span>Батько: / ПРІЗВИЩЕ ІМЯ / НАЦІОНАЛЬНІСТЬ / ДАТА НАРОДЖЕННЯ (рррр.мм.дд.) / Мати: / ПРІЗВИЩЕ ІМЯ / НАЦІОНАЛЬНІСТЬ / ДАТА НАРОДЖЕННЯ (рррр.мм.дд.)</label>
-        <textarea id="q20" name="q20" rows="2" placeholder="Ваша відповідь"></textarea>
+        <label class="qlabel"><span class="qnum">21</span><span>Батько: / ПРІЗВИЩЕ ІМЯ / НАЦІОНАЛЬНІСТЬ / ДАТА НАРОДЖЕННЯ (рррр.мм.дд.) / Мати: / ПРІЗВИЩЕ ІМЯ / НАЦІОНАЛЬНІСТЬ / ДАТА НАРОДЖЕННЯ (рррр.мм.дд.)</span></label>
+        <textarea id="q20" name="q20" rows="2" class="inp" placeholder="Ваша відповідь"></textarea>
       </div>
       <div class="field">
-        <label for="q21"><span class="qnum">22</span>ХТОСЬ З БАТЬКІВ ПРОЖИВАЄ В КИТАЇ?</label>
-        <input type="text" id="q21" name="q21" placeholder="Ваша відповідь">
+        <label class="qlabel"><span class="qnum">22</span><span>ХТОСЬ З БАТЬКІВ ПРОЖИВАЄ В КИТАЇ?</span></label>
+        <div class="yn" data-q="21">
+          <button type="button" class="yn-btn" data-val="Так">Так</button>
+          <button type="button" class="yn-btn" data-val="Ні">Ні</button>
+        </div>
+        <div class="yn-extra" id="extra21" hidden>
+          <textarea id="q21_d" rows="2" placeholder="Якщо так — опишіть детальніше"></textarea>
+        </div>
       </div>
       <div class="field">
-        <label for="q22"><span class="qnum">23</span>Чи є у вас найближчі родичі в Китаї, не враховуючи батьків?</label>
-        <input type="text" id="q22" name="q22" placeholder="Ваша відповідь">
+        <label class="qlabel"><span class="qnum">23</span><span>Чи є у вас найближчі родичі в Китаї, не враховуючи батьків?</span></label>
+        <div class="yn" data-q="22">
+          <button type="button" class="yn-btn" data-val="Так">Так</button>
+          <button type="button" class="yn-btn" data-val="Ні">Ні</button>
+        </div>
+        <div class="yn-extra" id="extra22" hidden>
+          <textarea id="q22_d" rows="2" placeholder="Якщо так — опишіть детальніше"></textarea>
+        </div>
       </div>
       <div class="field">
-        <label for="q23"><span class="qnum">24</span>ДІТИ / (П І П, ДАТА НАРОДЖЕННЯ (рррр.мм.дд.))</label>
-        <textarea id="q23" name="q23" rows="2" placeholder="Ваша відповідь"></textarea>
+        <label class="qlabel"><span class="qnum">24</span><span>ДІТИ / (П І П, ДАТА НАРОДЖЕННЯ (рррр.мм.дд.))</span></label>
+        <textarea id="q23" name="q23" rows="2" class="inp" placeholder="Ваша відповідь"></textarea>
       </div>
       <div class="field">
-        <label for="q24"><span class="qnum">25</span>Бажана дата подачі документів у візовий центр та дата поїздки</label>
-        <input type="text" id="q24" name="q24" placeholder="Ваша відповідь">
+        <label class="qlabel"><span class="qnum">25</span><span>Бажана дата подачі документів у візовий центр та дата поїздки</span></label>
+        <input type="text" id="q24" name="q24" class="inp" placeholder="Ваша відповідь">
       </div>
       <div class="field">
-        <label for="q25"><span class="qnum">26</span>ЕКСТРЕНИЙ КОНТАКТ / П І П / Стосунки з вами / (дружина, чоловік, батько, мати) / ТЕЛЕФОН / ПОЧТА @</label>
-        <textarea id="q25" name="q25" rows="2" placeholder="Ваша відповідь"></textarea>
+        <label class="qlabel"><span class="qnum">26</span><span>ЕКСТРЕНИЙ КОНТАКТ / П І П / Стосунки з вами / (дружина, чоловік, батько, мати) / ТЕЛЕФОН / ПОЧТА @</span></label>
+        <textarea id="q25" name="q25" rows="2" class="inp" placeholder="Ваша відповідь"></textarea>
       </div>
 
     <label class="consent">
@@ -279,7 +279,28 @@ h1{font-family:var(--font-display);font-weight:600;font-size:clamp(28px,5vw,46px
 <script>
 const WORKER = 'https://miavisaua.leoleogrinl.workers.dev';
 const COUNTRY = "Китай";
-const QUESTIONS = ["П. І. П. як в закордонному паспорті. Зміни прізвищ, дати змін, причини", "Країна в якій Ви зараз знаходитесь і в якій будете подавати на візу", "Стать, національність, наявність громадянства інших країн в теперішньому та минулому (дати)", "Дата народження", "Ідентифікаційний код", "Яка запланована дата в’їзду та тривалість Вашого перебування у Китай ?", "НА ЯКУ ВІЗУ ПОДАЄТЕ / (одноразова, дворазова, мульті)", "Що Ви будет робити у Китаї?Ціль візиту?", "Номер, серія паспорту, дата видачі, орган що видав, місце, країна видачі. / Увага! Вказати дані паспорта, у який плануєте отримати візу та надіслати відскановану 1 сторінку у хорошій якості", "Як ви будете фінансувати своє перебування в Китаї? (Спонсор,сімя,власні кошти,заробітна плата?", "Адреса проживання в Україні, або країні теперішнього перебування.", "Місце народження: населений пункт, країна", "Мобільний телефон", "email", "МІСЦЕ РОБОТИ (вказати за останні 5 років інформацію) / 1.Коли почали працювати (вказати дату). / 2.Назва підприємства. / 3.Посада та обов’язки. / 4.Адреса. / 5.Телефон компанії. / 6.Прізвище та ім’я керівника.", "ОСВІТА, ДИПЛОМ / (останній заклад, що закінчили – повна його назва)", "Вказати країни, які відвідувадли за останні 12 місяців", "Попередні поїздки до Китай типи віз, дати, тривалість та мета перебування. Який аеропорт/пункт перетину кордону? Наземний, авіатранспорт?", "Нелегальні перебування та робота у Китаї Депортації, порушення імміграційного законодавства в будь-якій країні", "ІНФОРМАЦІЯ ПРО СІМ'Ю / (батьки, сімейний стан, діти) / Чоловік \\ Дружина: / ПРІЗВИЩЕ ІМЯ / НАЦІОНАЛЬНІСТЬ / ДАТА НАРОДЖЕННЯ (рррр.мм.дд.) / Професія:", "Батько: / ПРІЗВИЩЕ ІМЯ / НАЦІОНАЛЬНІСТЬ / ДАТА НАРОДЖЕННЯ (рррр.мм.дд.) / Мати: / ПРІЗВИЩЕ ІМЯ / НАЦІОНАЛЬНІСТЬ / ДАТА НАРОДЖЕННЯ (рррр.мм.дд.)", "ХТОСЬ З БАТЬКІВ ПРОЖИВАЄ В КИТАЇ?", "Чи є у вас найближчі родичі в Китаї, не враховуючи батьків?", "ДІТИ / (П І П, ДАТА НАРОДЖЕННЯ (рррр.мм.дд.))", "Бажана дата подачі документів у візовий центр та дата поїздки", "ЕКСТРЕНИЙ КОНТАКТ / П І П / Стосунки з вами / (дружина, чоловік, батько, мати) / ТЕЛЕФОН / ПОЧТА @"];
+const FIELDS = [{"t": "text", "q": "П. І. П. як в закордонному паспорті. Зміни прізвищ, дати змін, причини"}, {"t": "text", "q": "Країна в якій Ви зараз знаходитесь і в якій будете подавати на візу"}, {"t": "text", "q": "Стать, національність, наявність громадянства інших країн в теперішньому та минулому (дати)"}, {"t": "date", "q": "Дата народження"}, {"t": "text", "q": "Ідентифікаційний код"}, {"t": "text", "q": "Яка запланована дата в’їзду та тривалість Вашого перебування у Китай ?"}, {"t": "text", "q": "НА ЯКУ ВІЗУ ПОДАЄТЕ / (одноразова, дворазова, мульті)"}, {"t": "text", "q": "Що Ви будет робити у Китаї?Ціль візиту?"}, {"t": "text", "q": "Номер, серія паспорту, дата видачі, орган що видав, місце, країна видачі. / Увага! Вказати дані паспорта, у який плануєте отримати візу та надіслати відскановану 1 сторінку у хорошій якості"}, {"t": "text", "q": "Як ви будете фінансувати своє перебування в Китаї? (Спонсор,сімя,власні кошти,заробітна плата?"}, {"t": "text", "q": "Адреса проживання в Україні, або країні теперішнього перебування."}, {"t": "text", "q": "Місце народження: населений пункт, країна"}, {"t": "text", "q": "Мобільний телефон"}, {"t": "text", "q": "email"}, {"t": "text", "q": "МІСЦЕ РОБОТИ (вказати за останні 5 років інформацію) / 1.Коли почали працювати (вказати дату). / 2.Назва підприємства. / 3.Посада та обов’язки. / 4.Адреса. / 5.Телефон компанії. / 6.Прізвище та ім’я керівника."}, {"t": "text", "q": "ОСВІТА, ДИПЛОМ / (останній заклад, що закінчили – повна його назва)"}, {"t": "text", "q": "Вказати країни, які відвідувадли за останні 12 місяців"}, {"t": "text", "q": "Попередні поїздки до Китай типи віз, дати, тривалість та мета перебування. Який аеропорт/пункт перетину кордону? Наземний, авіатранспорт?"}, {"t": "yn", "q": "Нелегальні перебування та робота у Китаї Депортації, порушення імміграційного законодавства в будь-якій країні"}, {"t": "text", "q": "ІНФОРМАЦІЯ ПРО СІМ'Ю / (батьки, сімейний стан, діти) / Чоловік \\ Дружина: / ПРІЗВИЩЕ ІМЯ / НАЦІОНАЛЬНІСТЬ / ДАТА НАРОДЖЕННЯ (рррр.мм.дд.) / Професія:"}, {"t": "text", "q": "Батько: / ПРІЗВИЩЕ ІМЯ / НАЦІОНАЛЬНІСТЬ / ДАТА НАРОДЖЕННЯ (рррр.мм.дд.) / Мати: / ПРІЗВИЩЕ ІМЯ / НАЦІОНАЛЬНІСТЬ / ДАТА НАРОДЖЕННЯ (рррр.мм.дд.)"}, {"t": "yn", "q": "ХТОСЬ З БАТЬКІВ ПРОЖИВАЄ В КИТАЇ?"}, {"t": "yn", "q": "Чи є у вас найближчі родичі в Китаї, не враховуючи батьків?"}, {"t": "text", "q": "ДІТИ / (П І П, ДАТА НАРОДЖЕННЯ (рррр.мм.дд.))"}, {"t": "text", "q": "Бажана дата подачі документів у візовий центр та дата поїздки"}, {"t": "text", "q": "ЕКСТРЕНИЙ КОНТАКТ / П І П / Стосунки з вами / (дружина, чоловік, батько, мати) / ТЕЛЕФОН / ПОЧТА @"}];
+
+// Так/Ні кнопки
+document.querySelectorAll('.yn').forEach(group => {
+  const qi = group.dataset.q;
+  const extra = document.getElementById('extra' + qi);
+  group.querySelectorAll('.yn-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      group.querySelectorAll('.yn-btn').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      group.dataset.val = btn.dataset.val;
+      if (extra) extra.hidden = (btn.dataset.val !== 'Так');
+    });
+  });
+});
+
+// формат дати дд.мм.рррр
+function fmtDate(v) {
+  if (!v) return '';
+  const [y,m,d] = v.split('-');
+  return (d && m && y) ? `${d}.${m}.${y}` : v;
+}
 
 const form = document.getElementById('anketa');
 form.addEventListener('submit', async (e) => {
@@ -287,36 +308,42 @@ form.addEventListener('submit', async (e) => {
   const err = document.getElementById('err');
   const btn = document.getElementById('submitBtn');
 
-  // збираємо відповіді
-  const answers = QUESTIONS.map((q, i) => {
-    const el = document.getElementById('q' + i);
-    return { q: q, a: (el ? el.value.trim() : '') };
+  const answers = FIELDS.map((f, i) => {
+    let a = '';
+    if (f.t === 'yn') {
+      const grp = document.querySelector('.yn[data-q="' + i + '"]');
+      const val = grp ? (grp.dataset.val || '') : '';
+      const det = document.getElementById('q' + i + '_d');
+      const dv = det ? det.value.trim() : '';
+      a = val + (val === 'Так' && dv ? ' — ' + dv : '');
+    } else if (f.t === 'splitdates') {
+      const a1 = fmtDate((document.getElementById('q'+i+'_a')||{}).value);
+      const b1 = fmtDate((document.getElementById('q'+i+'_b')||{}).value);
+      a = (a1 || b1) ? `приїзд: ${a1||'—'}, повернення: ${b1||'—'}` : '';
+    } else if (f.t === 'date') {
+      a = fmtDate((document.getElementById('q'+i)||{}).value);
+    } else {
+      const el = document.getElementById('q' + i);
+      a = el ? el.value.trim() : '';
+    }
+    return { q: f.q, a: a };
   });
 
-  // валідація: перше поле + згода
   if (!answers[0].a) { err.textContent = 'Будь ласка, заповніть перше поле (ПІБ як у паспорті).'; err.hidden = false; window.scrollTo({top:0,behavior:'smooth'}); return; }
   if (!document.getElementById('consent').checked) { err.textContent = 'Потрібна згода на обробку даних.'; err.hidden = false; return; }
   err.hidden = true;
-
-  btn.disabled = true;
-  btn.textContent = 'Надсилаємо…';
-
-  const payload = { type: 'anketa', country: COUNTRY, answers: answers, at: new Date().toISOString() };
+  btn.disabled = true; btn.textContent = 'Надсилаємо…';
 
   try {
-    const res = await fetch(WORKER, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
+    const res = await fetch(WORKER, { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ type:'anketa', country:COUNTRY, answers:answers, at:new Date().toISOString() }) });
     const data = await res.json().catch(()=>({}));
     if (!res.ok || !data.ok) throw new Error('fail');
     form.hidden = true;
     document.getElementById('done').hidden = false;
     window.scrollTo({top:0,behavior:'smooth'});
   } catch (ex) {
-    btn.disabled = false;
-    btn.textContent = 'Надіслати анкету →';
+    btn.disabled = false; btn.textContent = 'Надіслати анкету →';
     err.textContent = 'Не вдалося надіслати. Перевірте зʼєднання і спробуйте ще раз, або напишіть нам у Telegram.';
     err.hidden = false;
   }
