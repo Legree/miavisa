@@ -570,7 +570,8 @@ a{color:inherit;text-decoration:none}
   padding:60px clamp(20px,4vw,56px) 36px;
   background:var(--bg-2);
 }
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:44px;margin-bottom:56px}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 2fr;gap:44px;margin-bottom:56px}
+.footer .foot-visas ul{display:grid;grid-template-columns:repeat(2,max-content);grid-template-rows:repeat(7,auto);grid-auto-flow:column;gap:10px 36px}
 @media(max-width:760px){.footer-grid{grid-template-columns:1fr}}
 .footer p{color:var(--ink-soft);font-size:15px;max-width:34ch}
 .footer h4{
@@ -703,6 +704,9 @@ a{color:inherit;text-decoration:none}
 
 /* тіло */
 .cm-body{padding:26px clamp(20px,3.4vw,32px) 8px}
+.cm-page{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:4px 0 22px;padding:16px 20px;border:1px solid var(--gold);border-radius:14px;background:rgba(194,145,58,.07);font-weight:500;color:var(--ink);text-decoration:none;transition:background .25s}
+.cm-page::after{content:"";flex:none;width:9px;height:9px;border-top:2px solid var(--accent-data);border-right:2px solid var(--accent-data);transform:rotate(45deg)}
+.cm-page:hover{background:rgba(194,145,58,.16)}
 .cm-desc{color:var(--ink-soft);font-size:15.5px;margin-bottom:28px}
 .cm-block{margin-bottom:26px}
 /* два рівні ваги: primary виділено акцентною рискою в заголовку (аудит п.14) */
@@ -1610,6 +1614,25 @@ img,svg{max-width:100%}
         <li><a href="#services">Послуги</a></li>
       </ul>
     </div>
+    <div class="foot-visas">
+      <h4>Візи</h4>
+      <ul>
+        <li><a href="viza-britaniya.html">Велика Британія</a></li>
+        <li><a href="viza-ssha.html">США</a></li>
+        <li><a href="viza-kanada.html">Канада</a></li>
+        <li><a href="viza-avstraliya.html">Австралія</a></li>
+        <li><a href="viza-yaponiya.html">Японія</a></li>
+        <li><a href="viza-pivdenna-koreya.html">Південна Корея</a></li>
+        <li><a href="viza-kytay.html">Китай</a></li>
+        <li><a href="viza-singapur.html">Сінгапур</a></li>
+        <li><a href="viza-marokko.html">Марокко</a></li>
+        <li><a href="viza-par.html">ПАР</a></li>
+        <li><a href="viza-filippiny.html">Філіппіни</a></li>
+        <li><a href="viza-nova-zelandiya.html">Нова Зеландія</a></li>
+        <li><a href="viza-papua-nova-gvineya.html">Папуа-Нова Гвінея</a></li>
+        <li><a href="viza-indiya.html">Індія</a></li>
+      </ul>
+    </div>
   </div>
   <div class="footer-legal">
     <span>ФОП Гриньова Ірина Анатоліївна · Ідентифікаційний код 3478410322 · м. Київ</span>
@@ -1675,6 +1698,8 @@ img,svg{max-width:100%}
         <h4>Що входить у наші послуги</h4>
         <ul class="cm-serv" id="cmServices"></ul>
       </div>
+
+      <a class="cm-page" id="cmPage" href="#" hidden></a>
     </div>
 
     <div class="cm-foot">
@@ -2238,6 +2263,23 @@ const anketaLinks = {
   CN: 'anketa-kytay.html',
   SG: 'anketa-singapur.html',
 };
+// окремі сторінки країн (додаються поступово)
+const countryPages = {
+  GB: ['viza-britaniya.html', 'Великої Британії'],
+  US: ['viza-ssha.html', 'США'],
+  CA: ['viza-kanada.html', 'Канади'],
+  AU: ['viza-avstraliya.html', 'Австралії'],
+  JP: ['viza-yaponiya.html', 'Японії'],
+  KR: ['viza-pivdenna-koreya.html', 'Південної Кореї'],
+  CN: ['viza-kytay.html', 'Китаю'],
+  SG: ['viza-singapur.html', 'Сінгапуру'],
+  MA: ['viza-marokko.html', 'Марокко'],
+  ZA: ['viza-par.html', 'ПАР'],
+  PH: ['viza-filippiny.html', 'Філіппін'],
+  NZ: ['viza-nova-zelandiya.html', 'Нової Зеландії'],
+  PG: ['viza-papua-nova-gvineya.html', 'Папуа-Нової Гвінеї'],
+  IN: ['viza-indiya.html', 'Індії'],
+};
 let lastCountryCode = '';
 function openCountry(code) {
   const c = countries.find(x => x.code === code);
@@ -2300,6 +2342,14 @@ function openCountry(code) {
 
   cModal.hidden = false;
   document.body.style.overflow = 'hidden';
+  // посилання на окрему сторінку країни
+  const pageLink = document.getElementById('cmPage');
+  pageLink.hidden = !countryPages[code];
+  if (countryPages[code]) {
+    pageLink.href = countryPages[code][0];
+    pageLink.textContent = `Усе про візу до ${countryPages[code][1]} — на окремій сторінці`;
+  }
+
   // кнопка анкети — лише для країн, де вона є
   const anketaBtn = document.getElementById('cmAnketa');
   if (anketaLinks[code]) {
