@@ -701,6 +701,9 @@ a{color:inherit;text-decoration:none}
   background:linear-gradient(to top, var(--bg) 62%, rgba(250,246,239,0));
 }
 #cmCta{width:100%;justify-content:center}
+.anketa-link{width:100%;justify-content:center;margin-bottom:10px;border:1px solid var(--accent-action);color:var(--accent-data)}
+.anketa-link::before{background:var(--accent-action)}
+.anketa-link:hover{color:#fff}
 
 @media(max-width:620px){
   .cmodal{padding:0;align-items:flex-end}
@@ -1591,6 +1594,7 @@ img,svg{max-width:100%}
     </div>
 
     <div class="cm-foot">
+      <a class="btn anketa-link" id="cmAnketa" href="#" target="_blank" rel="noopener" hidden>Заповнити анкету <span class="arr">→</span></a>
       <button class="btn solid" id="cmCta">Отримати консультацію <span class="arr">→</span></button>
     </div>
   </div>
@@ -2140,6 +2144,16 @@ const commonServices = [
 /* ============ ВІКНО КРАЇНИ ============ */
 const cModal = document.getElementById('cmodal');
 
+// посилання на опитувальні анкети (є лише для цих країн)
+const anketaLinks = {
+  GB: 'anketa-britaniya.html',
+  US: 'anketa-ssha.html',
+  CA: 'anketa-kanada.html',
+  AU: 'anketa-avstraliya.html',
+  JP: 'anketa-yaponiya.html',
+  CN: 'anketa-kytay.html',
+  SG: 'anketa-singapur.html',
+};
 let lastCountryCode = '';
 function openCountry(code) {
   const c = countries.find(x => x.code === code);
@@ -2201,6 +2215,15 @@ function openCountry(code) {
 
   cModal.hidden = false;
   document.body.style.overflow = 'hidden';
+  // кнопка анкети — лише для країн, де вона є
+  const anketaBtn = document.getElementById('cmAnketa');
+  if (anketaLinks[code]) {
+    anketaBtn.href = anketaLinks[code];
+    anketaBtn.hidden = false;
+  } else {
+    anketaBtn.hidden = true;
+  }
+
   cModal.querySelector('.cm-box').scrollTop = 0;
 }
 
@@ -2223,7 +2246,7 @@ document.getElementById('cmCta').addEventListener('click', () => {
 /*  Коли Telegram-бот буде готовий — вписати URL вебхука сюди,
     і форма почне слати заявки автоматично.  */
 const LEAD_WEBHOOK = 'https://miavisaua.leoleogrinl.workers.dev';
-const LEAD_TG = 'https://t.me/IrynaMasyuk';
+const LEAD_TG = 'https://t.me/IrynaTravel_MIAvisa';
 
 // заповнюємо список напрямків із масиву countries
 (function fillCountries(){
