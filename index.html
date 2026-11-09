@@ -331,6 +331,7 @@ a{color:inherit;text-decoration:none}
 /* ---------- Countries ---------- */
 .section.alt{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:18px}
+a.card{color:inherit;text-decoration:none}
 .card{
   border:1px solid var(--line);border-radius:var(--radius);
   position:relative;overflow:hidden;
@@ -1494,9 +1495,9 @@ img,svg{max-width:100%}
   </div>
   <p class="about-statement" id="statement">Ми супроводжуємо клієнтів на кожному кроці — від анкети до <span class="gold">штампа в паспорті.</span></p>
   <div class="stats">
-    <div class="stat reveal"><b><span class="counter" data-to="10">0</span><span class="u">+</span></b><span>років у сфері візових послуг</span></div>
-    <div class="stat reveal d1"><b><span class="counter" data-to="14">0</span></b><span>країн, з якими ми працюємо</span></div>
-    <div class="stat reveal d2"><b><span class="counter" data-to="5">0</span></b><span>континентів у географії напрямків</span></div>
+    <div class="stat reveal"><b><span class="counter" data-to="10">10</span><span class="u">+</span></b><span>років у сфері візових послуг</span></div>
+    <div class="stat reveal d1"><b><span class="counter" data-to="14">14</span></b><span>країн, з якими ми працюємо</span></div>
+    <div class="stat reveal d2"><b><span class="counter" data-to="5">5</span></b><span>континентів у географії напрямків</span></div>
     <div class="stat reveal d3"><b>24/7</b><span>консультації протягом усього процесу</span></div>
   </div>
 </section>
@@ -1507,7 +1508,204 @@ img,svg{max-width:100%}
     <span class="section-label reveal">02 · Напрямки</span>
     <h2 class="section-title reveal d1">Куди відкриваємо візи</h2>
   </div>
-  <div class="grid" id="countriesGrid"></div>
+  <div class="grid" id="countriesGrid">
+    <a class="card reveal" href="viza-britaniya.html" data-code="GB">
+      <div class="visual" style="--t1:#1e3a6d;--t2:#7c1f2e">
+        <svg class="lm" aria-hidden="true"><use href="#lmGB"/></svg>
+        <svg class="flag" role="img" aria-label="Прапор — Велика Британія"><use href="#flagGB"/></svg>
+      </div>
+      <div class="body">
+        <h3>Велика Британія</h3>
+        <div class="types">Туристична · гостьова · бізнес (Visitor). Візи на 6 місяців, 2, 5 та 10 років.</div>
+        <div class="meta">
+          <div class="row"><span class="k">Консульський збір*</span><span class="v">від 135 £</span></div>
+        </div>
+        <span class="card-more">Детальніше <i>→</i></span>
+      </div>
+    </a>
+    <a class="card reveal d1" href="viza-ssha.html" data-code="US">
+      <div class="visual" style="--t1:#123a6b;--t2:#8c2331">
+        <svg class="lm" aria-hidden="true"><use href="#lmUS"/></svg>
+        <svg class="flag" role="img" aria-label="Прапор — США"><use href="#flagUS"/></svg>
+      </div>
+      <div class="body">
+        <h3>США</h3>
+        <div class="types">Туристична · гостьова · бізнес (B1/B2 до 10 років) та студентська віза.</div>
+        <div class="meta">
+          <div class="row"><span class="k">Консульський збір*</span><span class="v">185 $</span></div>
+        </div>
+        <span class="card-more">Детальніше <i>→</i></span>
+      </div>
+    </a>
+    <a class="card reveal d2" href="viza-kanada.html" data-code="CA">
+      <div class="visual" style="--t1:#8c1f26;--t2:#d4664f">
+        <svg class="lm" aria-hidden="true"><use href="#lmCA"/></svg>
+        <svg class="flag" role="img" aria-label="Прапор — Канада"><use href="#flagCA"/></svg>
+      </div>
+      <div class="body">
+        <h3>Канада</h3>
+        <div class="types">Туристична · гостьова · бізнес (Visitor).</div>
+        <div class="meta">
+          <div class="row"><span class="k">Консульський збір*</span><span class="v">185 CAD (збір + біометрія)</span></div>
+        </div>
+        <span class="card-more">Детальніше <i>→</i></span>
+      </div>
+    </a>
+    <a class="card reveal" href="viza-avstraliya.html" data-code="AU">
+      <div class="visual" style="--t1:#0f4c75;--t2:#2e8b9e">
+        <svg class="lm" aria-hidden="true"><use href="#lmAU"/></svg>
+        <svg class="flag" role="img" aria-label="Прапор — Австралія"><use href="#flagAU"/></svg>
+      </div>
+      <div class="body">
+        <h3>Австралія</h3>
+        <div class="types">Туристична · гостьова · бізнес.</div>
+        <div class="meta">
+          <div class="row"><span class="k">Консульський збір*</span><span class="v">250 AUD</span></div>
+        </div>
+        <span class="card-more">Детальніше <i>→</i></span>
+      </div>
+    </a>
+    <a class="card reveal d1" href="viza-yaponiya.html" data-code="JP">
+      <div class="visual" style="--t1:#b03a4a;--t2:#e08a7a">
+        <svg class="lm" aria-hidden="true"><use href="#lmJP"/></svg>
+        <svg class="flag" role="img" aria-label="Прапор — Японія"><use href="#flagJP"/></svg>
+      </div>
+      <div class="body">
+        <h3>Японія</h3>
+        <div class="types">Туристична · бізнес. Оформлення без особистої присутності.</div>
+        <div class="meta">
+          <div class="row"><span class="k">Консульський збір*</span><span class="v">відсутній для громадян України</span></div>
+        </div>
+        <span class="card-more">Детальніше <i>→</i></span>
+      </div>
+    </a>
+    <a class="card reveal d2" href="viza-pivdenna-koreya.html" data-code="KR">
+      <div class="visual" style="--t1:#1f4e8c;--t2:#b03a4a">
+        <svg class="lm" aria-hidden="true"><use href="#lmKR"/></svg>
+        <svg class="flag" role="img" aria-label="Прапор — Південна Корея"><use href="#flagKR"/></svg>
+      </div>
+      <div class="body">
+        <h3>Південна Корея</h3>
+        <div class="types">Туристична · бізнес.</div>
+        <div class="meta">
+          <div class="row"><span class="k">Консульський збір*</span><span class="v">за тарифом посольства</span></div>
+        </div>
+        <span class="card-more">Детальніше <i>→</i></span>
+      </div>
+    </a>
+    <a class="card reveal" href="viza-kytay.html" data-code="CN">
+      <div class="visual" style="--t1:#a51f24;--t2:#d99b2b">
+        <svg class="lm" aria-hidden="true"><use href="#lmCN"/></svg>
+        <svg class="flag" role="img" aria-label="Прапор — Китай"><use href="#flagCN"/></svg>
+      </div>
+      <div class="body">
+        <h3>Китай</h3>
+        <div class="types">Бізнес-віза за запрошенням.</div>
+        <div class="meta">
+          <div class="row"><span class="k">Консульський збір*</span><span class="v">за тарифом посольства</span></div>
+        </div>
+        <span class="card-more">Детальніше <i>→</i></span>
+      </div>
+    </a>
+    <a class="card reveal d1" href="viza-singapur.html" data-code="SG">
+      <div class="visual" style="--t1:#7a2230;--t2:#c96a5a">
+        <svg class="lm" aria-hidden="true"><use href="#lmSG"/></svg>
+        <svg class="flag" role="img" aria-label="Прапор — Сінгапур"><use href="#flagSG"/></svg>
+      </div>
+      <div class="body">
+        <h3>Сінгапур</h3>
+        <div class="types">Туристична · бізнес.</div>
+        <div class="meta">
+          <div class="row"><span class="k">Консульський збір*</span><span class="v">90 PLN</span></div>
+        </div>
+        <span class="card-more">Детальніше <i>→</i></span>
+      </div>
+    </a>
+    <a class="card reveal d2" href="viza-marokko.html" data-code="MA">
+      <div class="visual" style="--t1:#9c3a2e;--t2:#d99b5a">
+        <svg class="lm" aria-hidden="true"><use href="#lmMA"/></svg>
+        <svg class="flag" role="img" aria-label="Прапор — Марокко"><use href="#flagMA"/></svg>
+      </div>
+      <div class="body">
+        <h3>Марокко</h3>
+        <div class="types">Туристична · бізнес. Обробка — 3 робочі дні.</div>
+        <div class="meta">
+          <div class="row"><span class="k">Консульський збір*</span><span class="v">85 €</span></div>
+        </div>
+        <span class="card-more">Детальніше <i>→</i></span>
+      </div>
+    </a>
+    <a class="card reveal" href="viza-par.html" data-code="ZA">
+      <div class="visual" style="--t1:#1f6b4f;--t2:#d99b2b">
+        <svg class="lm" aria-hidden="true"><use href="#lmZA"/></svg>
+        <svg class="flag" role="img" aria-label="Прапор — ПАР"><use href="#flagZA"/></svg>
+      </div>
+      <div class="body">
+        <h3>ПАР</h3>
+        <div class="types">Туристична · бізнес.</div>
+        <div class="meta">
+          <div class="row"><span class="k">Консульський збір*</span><span class="v">за тарифом посольства</span></div>
+        </div>
+        <span class="card-more">Детальніше <i>→</i></span>
+      </div>
+    </a>
+    <a class="card reveal d1" href="viza-filippiny.html" data-code="PH">
+      <div class="visual" style="--t1:#1f5b8c;--t2:#3fa39b">
+        <svg class="lm" aria-hidden="true"><use href="#lmPH"/></svg>
+        <svg class="flag" role="img" aria-label="Прапор — Філіппіни"><use href="#flagPH"/></svg>
+      </div>
+      <div class="body">
+        <h3>Філіппіни</h3>
+        <div class="types">Туристична. Подача у Києві, оформлення 7–10 днів.</div>
+        <div class="meta">
+          <div class="row"><span class="k">Консульський збір*</span><span class="v">40 $</span></div>
+        </div>
+        <span class="card-more">Детальніше <i>→</i></span>
+      </div>
+    </a>
+    <a class="card reveal d2" href="viza-nova-zelandiya.html" data-code="NZ">
+      <div class="visual" style="--t1:#123a6b;--t2:#2e6b8c">
+        <svg class="lm" aria-hidden="true"><use href="#lmNZ"/></svg>
+        <svg class="flag" role="img" aria-label="Прапор — Нова Зеландія"><use href="#flagNZ"/></svg>
+      </div>
+      <div class="body">
+        <h3>Нова Зеландія</h3>
+        <div class="types">Туристична. Подача заявки в електронному вигляді.</div>
+        <div class="meta">
+          <div class="row"><span class="k">Консульський збір*</span><span class="v">341 NZD</span></div>
+        </div>
+        <span class="card-more">Детальніше <i>→</i></span>
+      </div>
+    </a>
+    <a class="card reveal" href="viza-papua-nova-gvineya.html" data-code="PG">
+      <div class="visual" style="--t1:#8c1f26;--t2:#2b2b2b">
+        <svg class="lm" aria-hidden="true"><use href="#lmPG"/></svg>
+        <svg class="flag" role="img" aria-label="Прапор — Папуа-Нова Гвінея"><use href="#flagPG"/></svg>
+      </div>
+      <div class="body">
+        <h3>Папуа-Нова Гвінея</h3>
+        <div class="types">Туристична. Дистанційне оформлення в електронному вигляді.</div>
+        <div class="meta">
+          <div class="row"><span class="k">Консульський збір*</span><span class="v">≈ 50 $</span></div>
+        </div>
+        <span class="card-more">Детальніше <i>→</i></span>
+      </div>
+    </a>
+    <a class="card reveal d1" href="viza-indiya.html" data-code="IN">
+      <div class="visual" style="--t1:#c26a1f;--t2:#2f7a4a">
+        <svg class="lm" aria-hidden="true"><use href="#lmIN"/></svg>
+        <svg class="flag" role="img" aria-label="Прапор — Індія"><use href="#flagIN"/></svg>
+      </div>
+      <div class="body">
+        <h3>Індія</h3>
+        <div class="types">Туристична. Оформлення онлайн за 72 години.</div>
+        <div class="meta">
+          <div class="row"><span class="k">Консульський збір*</span><span class="v">100 $</span></div>
+        </div>
+        <span class="card-more">Детальніше <i>→</i></span>
+      </div>
+    </a>
+  </div>
   <p class="grid-note reveal">* Консульський збір сплачується на користь посольства чи візового центру та не залежить від агенції.</p>
 </section>
 
@@ -1517,7 +1715,13 @@ img,svg{max-width:100%}
     <span class="section-label reveal">03 · Процес</span>
     <h2 class="section-title reveal d1">Як ми працюємо</h2>
   </div>
-  <div class="steps" id="steps"></div>
+  <div class="steps" id="steps">
+    <div class="step reveal"><div class="num">01</div><h3>Знайомство та анкетування</h3><p>Ви відповідаєте на кілька запитань — ми оцінюємо ситуацію та підбираємо оптимальний тип візи.</p></div>
+    <div class="step reveal"><div class="num">02</div><h3>Перелік документів</h3><p>Надаємо повний список необхідних документів і зразки їх оформлення. Ви підтверджуєте, що зможете їх підготувати.</p></div>
+    <div class="step reveal"><div class="num">03</div><h3>Оплата послуг</h3><p>Після узгодження умов і заповнення анкети — 50% перед початком співпраці. Повна оплата — до відвідування посольства.</p></div>
+    <div class="step reveal"><div class="num">04</div><h3>Підготовка та перевірка</h3><p>Ви надсилаєте документи електронною поштою — ми перевіряємо правильність, за потреби перекладаємо та заповнюємо всі візові анкети.</p></div>
+    <div class="step reveal"><div class="num">05</div><h3>Запис і подача</h3><p>Призначаємо дату подачі, передаємо вам готовий пакет — ви подаєте документи у візовий центр.</p></div>
+    <div class="step reveal"><div class="num">06</div><h3>Рішення</h3><p>Візовий офіцер приймає рішення про видачу візи. Ми консультуємо вас до самого результату.</p></div></div>
 </section>
 
 <!-- Extra services -->
@@ -1729,47 +1933,16 @@ const countries = [
 ];
 
 const grid = document.getElementById('countriesGrid');
-countries.forEach((c,i)=>{
-  const el = document.createElement('div');
-  el.className = 'card reveal ' + (i%3===1?'d1':i%3===2?'d2':'');
-  el.setAttribute('role','button');
-  el.setAttribute('tabindex','0');
-  el.addEventListener('click', ()=> openCountry(c.code));
-  el.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openCountry(c.code); }});
-  el.innerHTML = `
-    <div class="visual" style="--t1:${c.tint[0]};--t2:${c.tint[1]}">
-      ${c.img
-        ? `<img class="photo" src="${c.img}" alt="${c.name}" loading="lazy">`
-        : `<svg class="lm" aria-hidden="true"><use href="#lm${c.code}"/></svg>`}
-      <svg class="flag" role="img" aria-label="Прапор — ${c.name}"><use href="#flag${c.code}"/></svg>
-    </div>
-    <div class="body">
-      <h3>${c.name}</h3>
-      <div class="types">${c.types}</div>
-      <div class="meta">
-        <div class="row"><span class="k">Консульський збір*</span><span class="v">${c.fee}</span></div>
-      </div>
-      <span class="card-more">Детальніше <i>→</i></span>
-    </div>`;
-  grid.appendChild(el);
+grid.querySelectorAll('.card[data-code]').forEach(el=>{
+  el.addEventListener('click', e=>{
+    // Ctrl/Cmd/Shift-клік — відкрити сторінку країни в новій вкладці
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    openCountry(el.dataset.code);
+  });
 });
 
-/* ---------- Дані: процес ---------- */
-const steps = [
-  {t:'Знайомство та анкетування', d:'Ви відповідаєте на кілька запитань — ми оцінюємо ситуацію та підбираємо оптимальний тип візи.'},
-  {t:'Перелік документів', d:'Надаємо повний список необхідних документів і зразки їх оформлення. Ви підтверджуєте, що зможете їх підготувати.'},
-  {t:'Оплата послуг', d:'Після узгодження умов і заповнення анкети — 50% перед початком співпраці. Повна оплата — до відвідування посольства.'},
-  {t:'Підготовка та перевірка', d:'Ви надсилаєте документи електронною поштою — ми перевіряємо правильність, за потреби перекладаємо та заповнюємо всі візові анкети.'},
-  {t:'Запис і подача', d:'Призначаємо дату подачі, передаємо вам готовий пакет — ви подаєте документи у візовий центр.'},
-  {t:'Рішення', d:'Візовий офіцер приймає рішення про видачу візи. Ми консультуємо вас до самого результату.'},
-];
-const stepsWrap = document.getElementById('steps');
-steps.forEach((s,i)=>{
-  const el = document.createElement('div');
-  el.className = 'step reveal';
-  el.innerHTML = `<div class="num">0${i+1}</div><h3>${s.t}</h3><p>${s.d}</p>`;
-  stepsWrap.appendChild(el);
-});
+
 
 /* ---------- Marquee: дублюємо контент ---------- */
 const mq = document.getElementById('marquee');
@@ -1833,7 +2006,7 @@ const cio = new IntersectionObserver(entries=>{
     cio.unobserve(el);
   });
 },{threshold:.6});
-document.querySelectorAll('.counter').forEach(el=>cio.observe(el));
+document.querySelectorAll('.counter').forEach(el=>{ el.textContent = '0'; cio.observe(el); });
 
 /* ---------- Mobile menu ---------- */
 const burger = document.getElementById('burger');
