@@ -3,6 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google Analytics: до згоди працює без cookie, рекламні cookie вимкнені -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+(function () {
+  var c = null; try { c = localStorage.getItem('miavisa_cookie_consent'); } catch (e) {}
+  gtag('consent', 'default', { analytics_storage: c === 'granted' ? 'granted' : 'denied',
+    ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+})();
+gtag('js', new Date());
+gtag('config', 'G-DMWTTKVQBM');
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DMWTTKVQBM"></script>
+<script defer src="/analytics.js"></script>
+<!-- /Google Analytics -->
 <title>Оформлення візи в Києві — США, Британія, Канада, Японія | MIAVISA</title>
 <meta name="description" content="Візова агенція в Києві, працюємо по всій Україні: оформлення віз до США, Британії, Канади, Японії, Австралії та ще 9 країн.">
 <meta name="author" content="MIAVISA">
@@ -1840,7 +1855,7 @@ img,svg{max-width:100%}
   </div>
   <div class="footer-legal">
     <span>ФОП Гриньова Ірина Анатоліївна · Ідентифікаційний код 3478410322 · м. Київ</span>
-    <a href="oferta.html">Договір публічної оферти</a>
+    <span><a href="oferta.html">Договір публічної оферти</a> · <a href="#" data-cookie-settings>Налаштування cookie</a></span>
   </div>
   <div class="footer-bottom">
     <span>© 2026 MIAVISA</span>
@@ -2597,8 +2612,11 @@ leadForm.addEventListener('submit', async (e) => {
 
   if (LEAD_WEBHOOK) {
     try {
-      await fetch(LEAD_WEBHOOK, { method:'POST', headers:{'Content-Type':'application/json'},
+      const res = await fetch(LEAD_WEBHOOK, { method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({name, contact, country: countryName, note, at: new Date().toISOString()}) });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error('worker'); // бот не підтвердив — йдемо в резервний сценарій
+      if (window.gtag) gtag('event', 'generate_lead', { form_type: 'consultation', country: countryName || '—' });
       showDone('Заявку надіслано', `Дякуємо, ${name}! Ми зв'яжемось із вами найближчим часом.`);
       return;
     } catch (e) { /* нижче — резервний сценарій */ }
@@ -2606,6 +2624,7 @@ leadForm.addEventListener('submit', async (e) => {
 
   let copied = false;
   try { await navigator.clipboard.writeText(summary); copied = true; } catch (e) {}
+  if (window.gtag) gtag('event', 'lead_fallback', { form_type: 'consultation', country: countryName || '—' });
   showDone('Майже готово', copied
     ? `Ваші дані скопійовано. Відкрийте <a href="${LEAD_TG}" target="_blank" rel="noopener">чат у Telegram</a> і вставте їх — ми одразу все побачимо.`
     : `Напишіть нам у <a href="${LEAD_TG}" target="_blank" rel="noopener">Telegram</a> — ми продовжимо там.`);

@@ -3,6 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google Analytics: до згоди працює без cookie, рекламні cookie вимкнені -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+(function () {
+  var c = null; try { c = localStorage.getItem('miavisa_cookie_consent'); } catch (e) {}
+  gtag('consent', 'default', { analytics_storage: c === 'granted' ? 'granted' : 'denied',
+    ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+})();
+gtag('js', new Date());
+gtag('config', 'G-DMWTTKVQBM');
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DMWTTKVQBM"></script>
+<script defer src="/analytics.js"></script>
+<!-- /Google Analytics -->
 <title>Опитувальна анкета — Сінгапур · MIAVISA</title>
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M 82 30 A 38 38 0 1 0 88 59" fill="none" stroke="%23101d31" stroke-width="7" stroke-linecap="round"/><g transform="translate(88 55) scale(1.6) rotate(13)" fill="%23c2913a"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" transform="translate(-11.5 -11.5)"/></g></svg>'>
@@ -302,6 +317,7 @@ form.addEventListener('submit', async (e) => {
     const data = await res.json().catch(()=>({}));
     if (!res.ok || !data.ok) throw new Error('fail');
     form.hidden = true;
+    if (window.gtag) gtag('event', 'generate_lead', { form_type: 'anketa', country: COUNTRY });
     document.getElementById('done').hidden = false;
     window.scrollTo({top:0,behavior:'smooth'});
   } catch (ex) {
