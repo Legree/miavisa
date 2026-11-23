@@ -95,6 +95,46 @@ input[type=date].inp{min-height:48px}
 .done p{color:var(--ink-soft);font-size:16px;max-width:46ch;margin:0 auto}
 
 @media(max-width:620px){.wrap{padding:26px 16px 60px}.qnum{width:21px;height:21px;font-size:11px}}
+/* поле без відповіді — підсвітка після перевірки */
+.field{border-radius:var(--radius-sm);scroll-margin-top:110px}
+.field.missing .qnum{background:var(--accent-action)}
+.field.missing .inp,.field.missing .yn-btn:not(.on),.field.missing .yn-extra textarea{border-color:rgba(184,135,58,.65)}
+.field.flash{animation:flash 1.6s ease}
+@keyframes flash{0%,45%{background:rgba(194,145,58,.13);box-shadow:0 0 0 10px rgba(194,145,58,.13)}100%{background:transparent;box-shadow:0 0 0 10px transparent}}
+
+/* редагування вже надісланої анкети */
+.edit-note{font-size:14.5px;color:var(--ink);background:rgba(47,107,79,.08);border-radius:var(--radius-sm);padding:14px 18px;margin:22px 0 0;border-left:3px solid var(--success)}
+.edit-note b{font-weight:600}
+
+/* друга кнопка */
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid rgba(16,29,49,.22)}
+.btn-ghost:hover{border-color:var(--accent-action);box-shadow:none}
+
+/* вікно підтвердження */
+.cdlg{border:none;padding:0;margin:auto;overflow:hidden;border-radius:var(--radius);background:var(--card);color:var(--ink);width:min(560px,calc(100vw - 32px));max-height:calc(100vh - 40px);max-height:calc(100dvh - 40px);box-shadow:0 30px 80px -20px rgba(16,29,49,.45)}
+.cdlg::backdrop{background:rgba(16,29,49,.45);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.cdlg[open]{animation:dlgIn .3s cubic-bezier(.3,1.3,.5,1)}
+@keyframes dlgIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.cdlg-in{display:flex;flex-direction:column;padding:28px 28px 24px;max-height:calc(100vh - 40px);max-height:calc(100dvh - 40px)}
+.cdlg h2{font-family:var(--font-display);font-weight:600;font-size:22px;line-height:1.25;margin-bottom:12px}
+.cdlg-sum{font-size:16.5px;margin-bottom:6px}
+.cdlg-sum b{font-weight:600}
+.cdlg-hint{font-size:14.5px;color:var(--ink-soft);margin-bottom:14px}
+.cdlg-list{flex:1 1 auto;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:6px;margin:0 -6px 20px;padding:2px 6px}
+.cdlg-list[hidden]{display:none}
+.cdlg-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 12px;border-radius:var(--radius-sm);border:1px solid var(--line);background:var(--bg);cursor:pointer;font-family:var(--font-body);font-size:14.5px;line-height:1.4;color:var(--ink);transition:border-color .2s,background .2s}
+.cdlg-item:hover{border-color:var(--accent-action);background:#fff}
+.cdlg-item .qnum{background:var(--accent-action);margin-top:0}
+.cdlg-q{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cdlg-tag{flex:none;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-data)}
+.cdlg-actions{display:flex;gap:10px;flex:none}
+.cdlg-actions .btn{flex:1;padding:14px 20px;font-size:15px}
+@media(max-width:520px){.cdlg-in{padding:22px 18px 18px}.cdlg h2{font-size:20px}.cdlg-actions{flex-direction:column}.cdlg-tag{display:none}}
+
+/* екран «надіслано» — кнопка виправлення */
+.done-again{margin:30px auto 0;padding-top:26px;border-top:1px solid var(--line);max-width:440px}
+.done-again .btn{width:auto;padding:14px 24px;font-size:15px}
+.done .done-small{font-size:13.5px;margin-top:12px}
 </style>
 </head>
 <body>
@@ -149,8 +189,9 @@ input[type=date].inp{min-height:48px}
   <form id="anketa" novalidate>
     <div class="head-flag">🇨🇦</div>
     <div class="eyebrow">Опитувальна анкета</div>
-    <h1>Віза в Канада</h1>
+    <h1>Віза до Канади</h1>
     <p class="lead">Заповніть анкету якомога детальніше — це основа для підготовки вашої візи. <b>Перше поле заповнюється англійською, як у паспорті</b>, решту можна українською.</p>
+    <div class="edit-note" id="editNote" hidden><b>Редагування надісланої анкети.</b> Доповніть або виправте відповіді й натисніть «Надіслати виправлену анкету» внизу сторінки — ми отримаємо нову версію з позначкою «виправлена».</div>
     <div class="note-top">Поля із зірочкою (<span class="req">*</span>) обовʼязкові. У питаннях «Так / Ні» оберіть відповідь — якщо «Так», зʼявиться поле для деталей. Якщо пункт вас не стосується — оберіть «Ні» або напишіть «—».</div>
 
       <div class="field">
@@ -310,15 +351,45 @@ input[type=date].inp{min-height:48px}
     <div class="done-mark">✓</div>
     <h2>Анкету надіслано!</h2>
     <p id="doneText">Дякуємо! Ми отримали ваші відповіді й звʼяжемось із вами найближчим часом.</p>
+    <div class="done-again">
+      <button type="button" class="btn btn-ghost" id="editAgain">Щось забули? Виправити й надіслати ще раз</button>
+      <p class="done-small">Ваші відповіді збережені, поки відкрита ця сторінка.</p>
+    </div>
   </div>
 </main>
+
+<dialog class="cdlg" id="confirmDlg" aria-labelledby="cdlgTitle">
+  <div class="cdlg-in">
+    <h2 id="cdlgTitle">Надіслати анкету?</h2>
+    <p class="cdlg-sum" id="cdlgSum"></p>
+    <p class="cdlg-hint" id="cdlgHint"></p>
+    <div class="cdlg-list" id="cdlgList"></div>
+    <div class="cdlg-actions">
+      <button type="button" class="btn btn-ghost" id="cdlgBack">Повернутися до анкети</button>
+      <button type="button" class="btn" id="cdlgSend">Так, надіслати</button>
+    </div>
+  </div>
+</dialog>
 
 <script>
 const WORKER = 'https://miavisaua.leoleogrinl.workers.dev';
 const COUNTRY = "Канада";
 const FIELDS = [{"t": "text", "q": "П. І. П. як в закордонному паспорті. Зміни прізвищ, дати змін, причини"}, {"t": "text", "q": "Країна в якій Ви зараз знаходитесь і в якій будете подавати на візу"}, {"t": "text", "q": "Стать, національність, наявність громадянства інших країн в теперішньому та минулому (дати)"}, {"t": "date", "q": "Дата народження"}, {"t": "text", "q": "Яка запланована тривалість Вашого перебування у Канаді? Яка мета поїздки?"}, {"t": "yn", "q": "Чи подорожує ще хтось з Вами"}, {"t": "yn", "q": "Чи зверталися до лікаря, отримували медичну допомогу у Канаді?"}, {"t": "text", "q": "National Insurance Number Канади (якщо маєте)"}, {"t": "text", "q": "Номер, серія паспорту, дата видачі, орган що видав, місце, країна видачі. Увага! Вказати дані паспорта, у який плануєте отримати візу"}, {"t": "text", "q": "Сімейний стан (одружений/-а, неодружений/-а, розлучений/-а, вдівець/вдова). Якщо одружені — вкажіть дані дружини / чоловіка: прізвище та ім’я, дата й місце народження, громадянство, адреса проживання. Якщо є діти — по кожному: прізвище та ім’я, дата й місце народження, адреса проживання (якщо відрізняється від вашої)."}, {"t": "text", "q": "Місце народження: населений пункт, країна"}, {"t": "text", "q": "Адреса та тел. місця де Ви будете зупинятися у Канаді"}, {"t": "yn", "q": "Чи маєте Ви прямих родичів у Канаді? Хто? Кількість осіб? Адреса та тел. Чи плануєте Ви їх відвідати?"}, {"t": "text", "q": "Адреса проживання в Україні, або країні теперішнього перебування. Тривалість проживання за теперішньою адресою"}, {"t": "text", "q": "Мобільний телефон та email"}, {"t": "text", "q": "Теперішня посада в Україні, або країні теперішнього перебування, тривалість роботи на теперішньому місці та посаді, заробітна платня після вирахування податків. Назва компанії, адреса, номер телефону. / Вказати всю історію роботи детально, після завершенння навчання, не залишаючи пропусків по рокам."}, {"t": "text", "q": "Чи відвідували ви навчальні заклади університет або вище? Назва установи, адреса, курс навчання або профіль, дата, місяць, рік початку та закінчення навчання. / Вказати школу та ВНЗ по датам детально від першого класу до Університетів."}, {"t": "yn", "q": "Чи є у Вас заощадження, нерухомість, авто, акції та інші активи?"}, {"t": "text", "q": "Сума, яку Ви витрачаєте на місяць на проживання: харчування, транспорт, сплата рахунків, тощо"}, {"t": "text", "q": "Попередні поїздки до Канади, типи віз, дати, тривалість та мета перебування. Який аеропорт/пункт перетину кордону? Наземний, авіатранспорт?"}, {"t": "yn", "q": "Нелегальні перебування та робота у Канаді. Депортації, порушення імміграційного законодавства в будь-якій країні"}, {"t": "yn", "q": "Судимості в будь-якій країні"}, {"t": "text", "q": "Члени сім’ї: П.І.П, дані закордонного паспорту (якщо подорожують з вами), дати народження, національності адреса проживання"}, {"t": "text", "q": "П. І. П. батьків, дати та місця народження, національності адреса проживання"}, {"t": "text", "q": "Вказати країни, які відвідували за останні 10 років, мета та дати поїздок. Відмови у видачі віз. Депортації"}, {"t": "text", "q": "Бажана дата подачі документів у візовий центр та дата поїздки"}, {"t": "text", "q": "Додаткова інформація"}];
 
-// Так/Ні кнопки
+const form = document.getElementById('anketa');
+const errBox = document.getElementById('err');
+const submitBtn = document.getElementById('submitBtn');
+const doneBox = document.getElementById('done');
+const doneTitle = doneBox.querySelector('h2');
+const doneText = document.getElementById('doneText');
+const DONE_TEXT = doneText.textContent;
+const dlg = document.getElementById('confirmDlg');
+let revision = 0;      // 0 — перша відправка; 1, 2… — виправлені версії
+let sending = false;
+let pending = null;    // відповіді, що чекають підтвердження
+let issues = [];       // пропущені питання
+
+// ---------- Так/Ні ----------
 document.querySelectorAll('.yn').forEach(group => {
   const qi = group.dataset.q;
   const extra = document.getElementById('extra' + qi);
@@ -328,8 +399,15 @@ document.querySelectorAll('.yn').forEach(group => {
       btn.classList.add('on');
       group.dataset.val = btn.dataset.val;
       if (extra) extra.hidden = (btn.dataset.val !== 'Так');
+      if (btn.dataset.val === 'Ні') group.closest('.field').classList.remove('missing');
     });
   });
+});
+
+// поле стало заповненим — знімаємо підсвітку
+form.addEventListener('input', (e) => {
+  const f = e.target.closest('.field');
+  if (f && e.target.value.trim()) f.classList.remove('missing');
 });
 
 // формат дати дд.мм.рррр
@@ -339,20 +417,39 @@ function fmtDate(v) {
   return (d && m && y) ? `${d}.${m}.${y}` : v;
 }
 
-const form = document.getElementById('anketa');
-form.addEventListener('submit', async (e) => {
+// ---------- Enter не відправляє анкету — переходить до наступного поля ----------
+form.querySelectorAll('input:not([type=checkbox])').forEach(el => el.setAttribute('enterkeyhint', 'next'));
+function focusables() {
+  return [...form.querySelectorAll('input, textarea, .yn .yn-btn:first-child')]
+    .filter(el => el.offsetParent !== null && !el.disabled);
+}
+form.addEventListener('keydown', (e) => {
+  if (e.key !== 'Enter' || e.isComposing) return;
+  const t = e.target;
+  if (t.tagName !== 'INPUT') return;          // у textarea Enter — новий рядок
   e.preventDefault();
-  const err = document.getElementById('err');
-  const btn = document.getElementById('submitBtn');
+  if (t.type === 'checkbox') return;
+  const list = focusables();
+  const next = list[list.indexOf(t) + 1];
+  if (next) next.focus();
+});
 
-  const answers = FIELDS.map((f, i) => {
-    let a = '';
+// ---------- збір відповідей ----------
+function fieldOf(i) {
+  const el = document.getElementById('q' + i) || document.getElementById('q' + i + '_a') ||
+             document.querySelector('.yn[data-q="' + i + '"]');
+  return el ? el.closest('.field') : null;
+}
+function collect() {
+  return FIELDS.map((f, i) => {
+    let a = '', partial = false;
     if (f.t === 'yn') {
       const grp = document.querySelector('.yn[data-q="' + i + '"]');
       const val = grp ? (grp.dataset.val || '') : '';
       const det = document.getElementById('q' + i + '_d');
       const dv = det ? det.value.trim() : '';
       a = val + (val === 'Так' && dv ? ' — ' + dv : '');
+      partial = (val === 'Так' && !dv && !!det);
     } else if (f.t === 'splitdates') {
       const a1 = fmtDate((document.getElementById('q'+i+'_a')||{}).value);
       const b1 = fmtDate((document.getElementById('q'+i+'_b')||{}).value);
@@ -363,28 +460,127 @@ form.addEventListener('submit', async (e) => {
       const el = document.getElementById('q' + i);
       a = el ? el.value.trim() : '';
     }
-    return { q: f.q, a: a };
+    return { q: f.q, a: a, partial: partial };
   });
+}
+const btnLabel = () => revision ? 'Надіслати виправлену анкету →' : 'Надіслати анкету →';
+const plural = (n) => (n % 10 === 1 && n % 100 !== 11) ? 'питання' : 'питань';
 
-  if (!answers[0].a) { err.textContent = 'Будь ласка, заповніть перше поле (ПІБ як у паспорті).'; err.hidden = false; window.scrollTo({top:0,behavior:'smooth'}); return; }
-  if (!document.getElementById('consent').checked) { err.textContent = 'Потрібна згода на обробку даних.'; err.hidden = false; return; }
-  err.hidden = true;
-  btn.disabled = true; btn.textContent = 'Надсилаємо…';
+// ---------- кнопка «Надіслати» — спершу перевірка ----------
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (sending) return;
+  const answers = collect();
+  if (!answers[0].a) {
+    errBox.textContent = 'Будь ласка, заповніть перше поле (ПІБ як у паспорті).'; errBox.hidden = false;
+    const q0 = document.getElementById('q0');
+    q0.scrollIntoView({behavior:'smooth', block:'center'}); setTimeout(() => q0.focus({preventScroll:true}), 400);
+    return;
+  }
+  if (!document.getElementById('consent').checked) { errBox.textContent = 'Потрібна згода на обробку даних.'; errBox.hidden = false; return; }
+  errBox.hidden = true;
+  openConfirm(answers);
+});
 
+function openConfirm(answers) {
+  pending = answers;
+  const total = answers.length;
+  const filled = answers.filter(x => x.a).length;
+  issues = answers.map((x, i) => ({ i: i, x: x })).filter(o => !o.x.a || o.x.partial);
+
+  document.getElementById('cdlgTitle').textContent = revision ? 'Надіслати виправлену анкету?' : 'Надіслати анкету?';
+  const sum = document.getElementById('cdlgSum');
+  const hint = document.getElementById('cdlgHint');
+  const list = document.getElementById('cdlgList');
+  list.innerHTML = '';
+  if (issues.length) {
+    sum.innerHTML = 'Заповнено <b>' + filled + ' з ' + total + '</b> ' + plural(total) + '.';
+    hint.textContent = 'Перевірте пропущені питання — натисніть на будь-яке, щоб перейти до нього. Якщо питання вас не стосується, можна надсилати й так.';
+    issues.forEach(o => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'cdlg-item';
+      const n = document.createElement('span'); n.className = 'qnum'; n.textContent = o.i + 1;
+      const q = document.createElement('span'); q.className = 'cdlg-q'; q.textContent = o.x.q;
+      b.append(n, q);
+      if (o.x.partial) { const t = document.createElement('span'); t.className = 'cdlg-tag'; t.textContent = '«Так» без деталей'; b.append(t); }
+      b.title = o.x.q;
+      b.addEventListener('click', () => { closeConfirm(); goTo(o.i, o.x.partial); });
+      list.append(b);
+    });
+    list.hidden = false;
+  } else {
+    sum.innerHTML = 'Заповнено <b>всі ' + total + ' ' + plural(total) + '</b>.';
+    hint.textContent = 'Якщо все правильно — надсилайте.';
+    list.hidden = true;
+  }
+  document.getElementById('cdlgSend').textContent = revision ? 'Так, надіслати виправлену' : 'Так, надіслати';
+  dlg.showModal();
+  document.getElementById('cdlgBack').focus();   // за замовчуванням — безпечна кнопка
+}
+function closeConfirm() { if (dlg.open) dlg.close(); }
+function markMissing() {
+  document.querySelectorAll('.field.missing').forEach(f => f.classList.remove('missing'));
+  issues.forEach(o => { const f = fieldOf(o.i); if (f) f.classList.add('missing'); });
+}
+function goTo(i, partial) {
+  const f = fieldOf(i);
+  if (!f) return;
+  f.scrollIntoView({behavior:'smooth', block:'center'});
+  f.classList.remove('flash'); void f.offsetWidth; f.classList.add('flash');
+  const target = partial ? document.getElementById('q' + i + '_d')
+                         : f.querySelector('input, textarea, .yn-btn');
+  if (target) setTimeout(() => target.focus({preventScroll:true}), 450);
+}
+
+dlg.addEventListener('close', () => { if (pending) markMissing(); });
+dlg.addEventListener('click', (e) => { if (e.target === dlg) closeConfirm(); });   // клік поза вікном
+document.getElementById('cdlgBack').addEventListener('click', () => {
+  closeConfirm();
+  if (issues.length) goTo(issues[0].i, issues[0].x.partial);
+});
+document.getElementById('cdlgSend').addEventListener('click', () => {
+  const answers = pending; pending = null;
+  closeConfirm();
+  if (answers) send(answers);
+});
+
+// ---------- відправка ----------
+async function send(answers) {
+  if (sending) return;
+  sending = true;
+  submitBtn.disabled = true; submitBtn.textContent = 'Надсилаємо…';
+  const label = revision ? COUNTRY + ' (виправлена' + (revision > 1 ? ' ' + revision : '') + ')' : COUNTRY;
   try {
     const res = await fetch(WORKER, { method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ type:'anketa', country:COUNTRY, answers:answers, at:new Date().toISOString() }) });
+      body: JSON.stringify({ type:'anketa', country:label, revision:revision,
+        answers: answers.map(x => ({ q: x.q, a: x.a })), at:new Date().toISOString() }) });
     const data = await res.json().catch(()=>({}));
     if (!res.ok || !data.ok) throw new Error('fail');
+    document.querySelectorAll('.field.missing').forEach(f => f.classList.remove('missing'));
     form.hidden = true;
-    if (window.gtag) gtag('event', 'generate_lead', { form_type: 'anketa', country: COUNTRY });
-    document.getElementById('done').hidden = false;
+    if (window.gtag) gtag('event', revision ? 'anketa_corrected' : 'generate_lead', { form_type: 'anketa', country: COUNTRY });
+    doneTitle.textContent = revision ? 'Виправлену анкету надіслано!' : 'Анкету надіслано!';
+    doneText.textContent = revision ? 'Дякуємо! Ми отримали оновлені відповіді.' : DONE_TEXT;
+    doneBox.hidden = false;
     window.scrollTo({top:0,behavior:'smooth'});
   } catch (ex) {
-    btn.disabled = false; btn.textContent = 'Надіслати анкету →';
-    err.textContent = 'Не вдалося надіслати. Перевірте зʼєднання і спробуйте ще раз, або напишіть нам у Telegram.';
-    err.hidden = false;
+    submitBtn.disabled = false; submitBtn.textContent = btnLabel();
+    errBox.textContent = 'Не вдалося надіслати. Перевірте зʼєднання і спробуйте ще раз, або напишіть нам у Telegram.';
+    errBox.hidden = false;
+  } finally {
+    sending = false;
   }
+}
+
+// ---------- «Щось забули?» — повертаємо анкету з усіма відповідями ----------
+document.getElementById('editAgain').addEventListener('click', () => {
+  revision++;
+  doneBox.hidden = true;
+  form.hidden = false;
+  errBox.hidden = true;
+  submitBtn.disabled = false; submitBtn.textContent = btnLabel();
+  document.getElementById('editNote').hidden = false;
+  window.scrollTo({top:0,behavior:'smooth'});
 });
 </script>
 </body>
