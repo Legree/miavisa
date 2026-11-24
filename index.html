@@ -750,6 +750,7 @@ a.card{color:inherit;text-decoration:none}
 }
 .cm-row:last-child{border-bottom:none}
 .cm-row b{font-family:var(--font-mono);font-size:13px;color:var(--accent-data);font-weight:500;white-space:nowrap}
+.cm-tip{margin-top:14px;padding:12px 16px;border-radius:var(--radius-sm);background:var(--bg-2);border-left:3px solid var(--gold);font-size:14px;line-height:1.5;color:var(--ink)}
 .cm-fine{margin-top:11px;font-size:12.5px;color:var(--ink-soft);opacity:.85;line-height:1.5}
 .cm-chips{display:flex;flex-wrap:wrap;gap:8px}
 .cm-chip{
@@ -1918,6 +1919,12 @@ img,svg{max-width:100%}
         <ul class="cm-serv" id="cmServices"></ul>
       </div>
 
+      <div class="cm-block" id="cmExtraBox" hidden>
+        <h4 id="cmExtraTitle"></h4>
+        <ul class="cm-notes" id="cmExtra"></ul>
+        <p class="cm-tip" id="cmExtraTip"></p>
+      </div>
+
       <a class="cm-page" id="cmPage" href="#" hidden></a>
     </div>
 
@@ -2063,7 +2070,7 @@ const details = {
       'Візи на 5 і 10 років оформлюємо за окремим запитом.',
       'У Києві збору візового центру немає. При подачі в межах ЄС він обов\'язковий — 91 €.',
       'За цими візами заборонено працювати та вести підприємницьку діяльність.',
-      'Продовжити візу всередині країни неможливо — після завершення строку треба виїхати.',
+      'Візу Standard Visitor продовжити всередині країни неможливо — після завершення строку треба виїхати.',
       'Якщо ви вже здали біометрію, візовий збір не повертається незалежно від рішення.',
       'Права на апеляцію за Standard Visitor немає. Є адміністративний перегляд — 28 днів з дати відмови.',
       'Для віз від 6 місяців потрібен тест на туберкульоз — Україна у списку ризику. Проходиться лише в акредитованій клініці.',
@@ -2081,6 +2088,25 @@ const details = {
       'Документи, що підтверджують зв\'язки з Україною',
     ],
     docsNote: 'Перелік умовний: у кожному випадку комплект відрізняється. До кожного документа є вимоги щодо строку дії, форми та сум — саме на цих деталях найчастіше й ламаються самостійні заявки.',
+    services: [
+      'Підбір типу візи під вашу ситуацію',
+      'Перелік і зразки необхідних документів',
+      'Перевірка правильності оформлення',
+      'Заповнення візових анкет',
+      'Запис на подачу у візовий центр',
+      'Консультації протягом усього процесу',
+      'Продовження віз Homes for Ukraine (UPE)',
+    ],
+    extra: {
+      title: 'Продовження віз Homes for Ukraine (UPE)',
+      items: [
+        'Ukraine Permission Extension (UPE): перше продовження — на 18 місяців, друге — на 24 місяці.',
+        'Подати на продовження можна за 90 днів до завершення теперішньої візи.',
+        'Продовжити дистанційно можна за наявності BRP-карти, строк дії якої завершився протягом 24 місяців.',
+        'BRP-карти були дійсні до 31.12.2024, тож використати їх для продовження можна до 31.12.2026. Після цієї дати потрібно здавати біометрію на території Великобританії.',
+      ],
+      tip: 'Якщо ваша віза закінчується до 31 березня 2027 — радимо подати до 31 грудня 2026, поки можна скористатися дистанційною подачею з BRP.',
+    },
   },
 
   US: {
@@ -2527,6 +2553,16 @@ function openCountry(code) {
   }
 
   $('cmServices').innerHTML = (d.services || commonServices).map(s => `<li>${s}</li>`).join('');
+
+  // додатковий блок (напр. продовження Homes for Ukraine для Британії)
+  const ex = d.extra;
+  $('cmExtraBox').hidden = !ex;
+  if (ex) {
+    $('cmExtraTitle').textContent = ex.title;
+    $('cmExtra').innerHTML = ex.items.map(n => `<li>${n}</li>`).join('');
+    $('cmExtraTip').textContent = ex.tip || '';
+    $('cmExtraTip').hidden = !ex.tip;
+  }
 
   cModal.hidden = false;
   document.body.style.overflow = 'hidden';
